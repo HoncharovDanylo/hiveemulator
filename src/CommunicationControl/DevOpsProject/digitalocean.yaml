@@ -1,0 +1,12 @@
+services:
+  - name: api
+    envs:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+    build_command: "dotnet publish -c Release -o /app"
+    run_command: "dotnet /app/DevOpsProject.CommunicationControl.API.dll"
+    http_port: 8080
+    routes:
+      - path: /
+    instance_count: 1
+    instance_size_slug: basic-xxs
