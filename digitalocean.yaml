@@ -1,0 +1,46 @@
+name: devops-project
+region: fra1
+services:
+  - name: frontend
+    source_dir: src/MapClient
+    github:
+      branch: main
+      repo: HoncharovDanylo/hiveemulator
+    build_command: "npm install && npm run build"
+    run_command: "npm start"
+    http_port: 3000
+    routes:
+      - path: /
+
+  - name: api
+    source_dir: src/CommunicationControl/DevOpsProject
+    github:
+      branch: main
+      repo: HoncharovDanylo/hiveemulator
+    envs:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+    build_command: "dotnet publish -c Release -o /app"
+    run_command: "dotnet /app/DevOpsProject.dll"
+    http_port: 8080
+    routes:
+      - path: /api
+
+  - name: hive
+    source_dir: src/CommunicationControl/DevOpsProject.HiveMind.API
+    github:
+      branch: main
+      repo: HoncharovDanylo/hiveemulator
+    envs:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+    build_command: "dotnet publish -c Release -o /app"
+    run_command: "dotnet /app/DevOpsProject.HiveMind.API.dll"
+    http_port: 5149
+    routes:
+      - path: /hive
+
+databases:
+  - engine: REDIS
+    name: my-redis
+    version: "7"
