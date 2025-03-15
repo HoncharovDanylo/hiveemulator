@@ -1,0 +1,7 @@
+src/MapClient/node_modules
+src/CommunicationControl/.idea
+src/CommunicationControl/.vs
+bin
+obj
+Logs
+.vscode
