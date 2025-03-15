@@ -4,7 +4,7 @@ services:
   - name: frontend
     source_dir: src/MapClient
     github:
-      branch: main
+      branch: master
       repo: HoncharovDanylo/hiveemulator
     build_command: "npm install && npm run build"
     run_command: "npm start"
@@ -15,7 +15,7 @@ services:
   - name: api
     source_dir: src/CommunicationControl/DevOpsProject
     github:
-      branch: main
+      branch: master
       repo: HoncharovDanylo/hiveemulator
     envs:
       - key: ASPNETCORE_ENVIRONMENT
@@ -29,7 +29,7 @@ services:
   - name: hive
     source_dir: src/CommunicationControl/DevOpsProject.HiveMind.API
     github:
-      branch: main
+      branch: master
       repo: HoncharovDanylo/hiveemulator
     envs:
       - key: ASPNETCORE_ENVIRONMENT
