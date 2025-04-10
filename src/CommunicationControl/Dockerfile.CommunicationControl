@@ -1,0 +1,25 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+EXPOSE 5254
+
+WORKDIR /src
+
+COPY ["DevOpsProject/DevOpsProject.CommunicationControl.API.csproj", "backend/DevOpsProject/"]
+COPY ["DevOpsProject.Shared/DevOpsProject.Shared.csproj", "backend/DevOpsProject.Shared/"]
+COPY ["DevOpsProject.CommunicationControl.Logic/DevOpsProject.CommunicationControl.Logic.csproj", "backend/DevOpsProject.CommunicationControl.Logic/"]
+COPY ["DevOpsProject.Example.MessageListener/DevOpsProject.Example.MessageListener.csproj", "backend/DevOpsProject.Example.MessageListener/"]
+RUN dotnet restore "backend/DevOpsProject/DevOpsProject.CommunicationControl.API.csproj"
+
+WORKDIR "/src/backend/"
+COPY ./ ./
+
+
+FROM build AS publish
+WORKDIR "/src/backend/DevOpsProject/"
+RUN dotnet publish -c Release -o out
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS final-env
+COPY --from=publish /src/backend/DevOpsProject/out .
+ENTRYPOINT [ "dotnet", "DevOpsProject.CommunicationControl.API.dll" ]
