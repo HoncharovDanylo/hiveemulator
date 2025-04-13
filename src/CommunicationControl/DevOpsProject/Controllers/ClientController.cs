@@ -9,7 +9,7 @@ namespace DevOpsProject.CommunicationControl.API.Controllers
 {
     [ApiVersion("1.0")]
     [ApiController]
-    [Route("api/v{version:apiVersion}/client")]
+    [Route("v{version:apiVersion}/client")]
     public class ClientController : Controller
     {
         private readonly ICommunicationControlService _communicationControlService;
